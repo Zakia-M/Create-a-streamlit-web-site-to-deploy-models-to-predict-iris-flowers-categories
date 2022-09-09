@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
-from sklearn import datasets
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB
+import pickle
 
 st.write('''
 #   Simple app for Iris flowers prediction
@@ -35,24 +32,23 @@ st.subheader('We want to find the category of this flower')
 # show df
 st.write(df)
 
-iris=datasets.load_iris()
-model1=RandomForestClassifier()
-model2=LogisticRegression()
-model3=GaussianNB()
+p_model=[]
+predictions=['prediction' + str(i) for i in range(5)]
 
-model1.fit(iris.data,iris.target)
-model2.fit(iris.data,iris.target)
-model3.fit(iris.data,iris.target)
 
-prediction1=model1.predict(df)
-prediction2=model2.predict(df)
-prediction3=model3.predict(df)
+for i in range(3):
+    p_model.append(pickle.load(open('model'+str(i)+'.pkl', 'rb')))
+    predictions[i]=p_model[i].predict(df)
+
+
+flower_names=['setosa', 'versicolor', 'virginica']
 
 pred={
-    'Random Forest ':iris.target_names[prediction1][0],
-    'Logistic Regression':iris.target_names[prediction2][0],
-    'Gaussian Naive Bais':iris.target_names[prediction3][0],
+    'Random Forest ':flower_names[predictions[0][0]],
+    'Logistic Regression':flower_names[predictions[1][0]],
+    'DecisionTreeClassifier':flower_names[predictions[2][0]]
     }
+                                          
 predicted_flower_category=pd.DataFrame(pred,index=[0])
 
 st.subheader("The category of the iris flower is:")
