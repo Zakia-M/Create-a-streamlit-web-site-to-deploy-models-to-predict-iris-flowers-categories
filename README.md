@@ -10,4 +10,4 @@ A- Download streamlit : <br/>
 4- download Streamlit backage with : pip install streamlit<br/>
 
 <br/><br/>
-B- Run the code by tiping in the terminal : streamlit run main.py (make sure you are on the folder where you put the main.py file)
+B- Run the code by tiping in the terminal : streamlit run main.py (make sure you are on the folder where you put the main.py file and you activated the streamlit environnement )
